@@ -1,11 +1,936 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFF</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Futuro del País</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0053b3;
+      --primary-light: #2979ff;
+      --primary-dark: #003380;
+      --accent: #00c3ff;
+      --light-blue: #e6f4ff;
+      --white: #ffffff;
+      --off-white: #f9fbff;
+      --text: #2c3e50;
+      --text-light: #546e7a;
+      --shadow: rgba(41, 121, 255, 0.1);
+      --shadow-strong: rgba(0, 83, 179, 0.2);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-color: var(--off-white);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 70px;
+      position: relative;
+    }
+    
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    h1 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-shadow: 2px 2px 4px var(--shadow);
+    }
+    
+    header p {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* Profiles Section */
+    .profiles-section {
+      margin-bottom: 100px;
+    }
+    
+    .profiles {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    
+    .profile {
+      flex: 1;
+      min-width: 300px;
+      max-width: 380px;
+      background-color: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .profile:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px var(--shadow-strong);
+    }
+    
+    .profile-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 70%);
+    }
+    
+    .profile img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .profile:hover img {
+      transform: scale(1.05);
+    }
+    
+    .profile-body {
+      padding: 30px;
+    }
+    
+    .profile h2 {
+      color: var(--white);
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+    
+    .profile-header p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    
+    .profile-body p {
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .skills {
+      list-style: none;
+      margin-bottom: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .skills li {
+      font-size: 0.9rem;
+      background-color: var(--light-blue);
+      color: var(--primary);
+      padding: 6px 15px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    .button {
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+      box-shadow: 0 5px 15px var(--shadow);
+      width: 100%;
+    }
+    
+    .button:hover {
+      background: linear-gradient(90deg, var(--primary-light), var(--primary));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--shadow-strong);
+    }
+    
+    .button i {
+      margin-right: 8px;
+    }
+    
+    .info {
+      display: none;
+      margin-top: 20px;
+      text-align: left;
+      background-color: var(--light-blue);
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 1rem;
+      border-left: 4px solid var(--primary);
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Projects Section */
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .section-title h2 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    
+    .section-title p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .projects {
+      margin: 80px 0;
+      padding: 60px 0;
+      background-color: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 0 40px;
+    }
+    
+    .project-card {
+      background: var(--off-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px var(--shadow-strong);
+    }
+    
+    .project-image {
+      height: 180px;
+      background: linear-gradient(45deg, var(--primary-light), var(--accent));
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-image i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .project-content {
+      padding: 25px;
+    }
+    
+    .project-content h3 {
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    
+    .project-content p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 25px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .project-status {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .project-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    
+    .project-link:hover {
+      color: var(--accent);
+    }
+    
+    /* Contact Section */
+    .contact {
+      margin-top: 80px;
+      text-align: center;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--shadow-strong);
+      color: var(--white);
+    }
+    
+    .contact h2 {
+      color: var(--white);
+      margin-bottom: 25px;
+      font-size: 2.5rem;
+    }
+    
+    .contact p {
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1.5rem;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .social-link:hover {
+      background-color: var(--white);
+      color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 15px;
+      border-radius: 8px;
+      border: none;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+    
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .send-button {
+      background-color: var(--white);
+      color: var(--primary);
+      border: none;
+      padding: 15px 40px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .send-button:hover {
+      background-color: var(--off-white);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    .modal-content {
+      background-color: var(--white);
+      margin: 10% auto;
+      padding: 30px;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: translateY(-50px);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .close-modal:hover {
+      color: var(--primary);
+    }
+    
+    .modal-header {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .modal-header h2 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .modal-body {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .modal-body h3 {
+      color: var(--primary-dark);
+      margin: 20px 0 10px;
+      font-size: 1.5rem;
+    }
+    
+    .modal-body p {
+      margin-bottom: 15px;
+    }
+    
+    .modal-body ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .modal-footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 95%;
+        margin: 20% auto;
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Hola</h1>
+  <div class="container">
+    <header>
+      <h1>El Futuro del País</h1>
+      <p>Un grupo de estudiantes apasionados por la tecnología y comprometidos con la excelencia en cada proyecto</p>
+    </header>
+
+    <div class="profiles-section">
+      <div class="profiles">
+        <!-- Eugenio Navarro -->
+        <div class="profile" data-id="eugenio">
+          <div class="profile-header">
+            <img src="eugenio.png" alt="Eugenio Navarro">
+            <h2>Eugenio Navarro</h2>
+            <p>Desarrollador Frontend</p>
+          </div>
+          <div class="profile-body">
+            <ul class="skills">
+              <li>Diseño UI/UX</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+            </ul>
+            <button class="button"><i class="fas fa-user-plus"></i>Ver Perfil</button>
+          </div>
+        </div>
+
+        <!-- Tadeo Ambrogio -->
+        <div class="profile" data-id="tadeo">
+          <div class="profile-header">
+            <img src="tadeo.jpg" alt="Tadeo Ambrogio">
+            <h2>Tadeo Ambrogio</h2>
+            <p>Ingeniero Mecánico</p>
+          </div>
+          <div class="profile-body">
+            <ul class="skills">
+              <li>Análisis de Circuitos</li>
+              <li>Inteligencia Artificial</li>
+              <li>Especialidad Computacional</li>
+            </ul>
+            <button class="button"><i class="fas fa-user-plus"></i>Ver Perfil</button>
+          </div>
+        </div>
+
+        <!-- Nazareno Verino -->
+        <div class="profile" data-id="nazareno">
+          <div class="profile-header">
+            <img src="nazareno.jpg" alt="Nazareno Verino">
+            <h2>Nazareno Verino</h2>
+            <p>Especialista en Sistemas</p>
+          </div>
+          <div class="profile-body">
+            <ul class="skills">
+              <li>Elaboración de sistemas</li>
+              <li>Desarrollador de Python</li>
+              <li>POE</li>
+            </ul>
+            <button class="button"><i class="fas fa-user-plus"></i>Ver Perfil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects">
+      <div class="section-title">
+        <h2>Proyectos Destacados</h2>
+        <p>Colaboramos para crear soluciones innovadoras que marcan la diferencia</p>
+      </div>
+      
+      <div class="projects-grid">
+        <!-- Proyecto 1 -->
+        <div class="project-card" data-id="project1">
+          <div class="project-image">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="project-content">
+            <h3>Sistema de IA para Eficiencia Energética</h3>
+            <p>Desarrollo de un sistema inteligente para optimizar el consumo energético en edificios residenciales.</p>
+          </div>
+          <div class="project-footer">
+            <span class="project-status">Completado</span>
+            <a href="#" class="project-link">Ver Más</a>
+          </div>
+        </div>
+
+        <!-- Proyecto 2 -->
+        <div class="project-card" data-id="project2">
+          <div class="project-image">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <div class="project-content">
+            <h3>Plataforma Educativa Digital</h3>
+            <p>Una solución web innovadora para conectar estudiantes y profesores con recursos educativos personalizados.</p>
+          </div>
+          <div class="project-footer">
+            <span class="project-status">En Progreso</span>
+            <a href="#" class="project-link">Ver Más</a>
+          </div>
+        </div>
+
+        <!-- Proyecto 3 -->
+        <div class="project-card" data-id="project3">
+          <div class="project-image">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="project-content">
+            <h3>Algoritmo de Predicción Médica</h3>
+            <p>Sistema basado en ML para ayudar en el diagnóstico temprano de condiciones cardiovasculares.</p>
+          </div>
+          <div class="project-footer">
+            <span class="project-status">En Desarrollo</span>
+            <a href="#" class="project-link">Ver Más</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact">
+      <h2>Contacta con Nosotros</h2>
+      <p>¿Tienes un proyecto en mente? ¡Colaboremos para hacerlo realidad!</p>
+      
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+      </div>
+      
+      <div class="contact-form">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Tu Nombre">
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Tu Email">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Tu Mensaje"></textarea>
+        </div>
+        <button class="send-button">Enviar Mensaje</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para mostrar información detallada -->
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <button class="close-modal"><i class="fas fa-times"></i></button>
+      <div class="modal-header">
+        <h2 id="modalTitle">Título</h2>
+        <p id="modalSubtitle">Subtítulo</p>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- El contenido se llenará dinámicamente -->
+      </div>
+      <div class="modal-footer">
+        <button class="send-button" id="closeModalBtn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Datos para perfiles y proyectos
+    const profilesData = {
+      eugenio: {
+        title: "Eugenio Navarro",
+        subtitle: "Desarrollador Frontend",
+        content: `
+          <p>Eugenio es un apasionado desarrollador frontend con experiencia en la creación de interfaces de usuario modernas y atractivas. Especializado en tecnologías web como HTML5, CSS3 y JavaScript, ha contribuido a múltiples proyectos que destacan por su diseño intuitivo y experiencia de usuario excepcional.</p>
+          
+          <h3>Especialidades</h3>
+          <ul>
+            <li><strong>Diseño UI/UX:</strong> Creación de interfaces intuitivas y atractivas centradas en el usuario.</li>
+            <li><strong>CSS Avanzado:</strong> Dominio de frameworks como Bootstrap, Tailwind y técnicas de CSS Grid y Flexbox.</li>
+            <li><strong>JavaScript:</strong> Desarrollo de aplicaciones web interactivas y responsivas con frameworks modernos.</li>
+          </ul>
+          
+          <h3>Proyectos Destacados</h3>
+          <ul>
+            <li>Rediseño completo de la interfaz para la plataforma educativa digital del equipo.</li>
+            <li>Desarrollo del frontend para el sistema de monitoreo energético en tiempo real.</li>
+            <li>Creación de componentes reutilizables para futuros proyectos del equipo.</li>
+          </ul>
+          
+          <h3>Formación</h3>
+          <p>Estudiante avanzado de Ingeniería en Sistemas con especialización en desarrollo web. Ha complementado su formación académica con certificaciones en diseño UI/UX y programación frontend.</p>
+        `
+      },
+      tadeo: {
+        title: "Tadeo Ambrogio",
+        subtitle: "Ingeniero Mecánico",
+        content: `
+          <p>Tadeo combina su formación en ingeniería mecánica con una pasión por la computación y la inteligencia artificial. Su enfoque multidisciplinario le permite abordar problemas complejos desde diferentes perspectivas, aportando soluciones innovadoras a los proyectos del equipo.</p>
+          
+          <h3>Especialidades</h3>
+          <ul>
+            <li><strong>Análisis de Circuitos:</strong> Diseño y optimización de sistemas electrónicos para aplicaciones prácticas.</li>
+            <li><strong>Inteligencia Artificial:</strong> Implementación de algoritmos de machine learning para resolver problemas de ingeniería.</li>
+            <li><strong>Especialidad Computacional:</strong> Aplicación de métodos numéricos y simulaciones para validar diseños mecánicos.</li>
+          </ul>
+          
+          <h3>Proyectos Destacados</h3>
+          <ul>
+            <li>Desarrollo del modelo de predicción para el sistema de eficiencia energética.</li>
+            <li>Diseño del hardware para el proyecto de monitoreo ambiental.</li>
+            <li>Integración de sensores IoT con sistemas de machine learning para aplicaciones industriales.</li>
+          </ul>
+          
+          <h3>Formación</h3>
+          <p>Ingeniero Mecánico con especialización en sistemas computacionales. Actualmente cursando un posgrado en Inteligencia Artificial Aplicada a la Ingeniería.</p>
+        `
+      },
+      nazareno: {
+        title: "Nazareno Verino",
+        subtitle: "Especialista en Sistemas",
+        content: `
+          <p>Nazareno es el experto en sistemas del equipo, con un profundo conocimiento en desarrollo backend y arquitectura de software. Su capacidad para diseñar sistemas robustos y escalables es fundamental para el éxito de los proyectos más complejos del grupo.</p>
+          
+          <h3>Especialidades</h3>
+          <ul>
+            <li><strong>Elaboración de sistemas:</strong> Diseño e implementación de arquitecturas escalables y mantenibles.</li>
+            <li><strong>Desarrollador de Python:</strong> Experto en Python para aplicaciones de data science, web y automatización.</li>
+            <li><strong>POE:</strong> Programación Orientada a Eventos para sistemas reactivos y en tiempo real.</li>
+          </ul>
+          
+          <h3>Proyectos Destacados</h3>
+          <ul>
+            <li>Arquitectura del backend para la plataforma educativa del equipo.</li>
+            <li>Desarrollo del pipeline de procesamiento de datos para el algoritmo de predicción médica.</li>
+            <li>Implementación de APIs y microservicios para la integración de sistemas heterogéneos.</li>
+          </ul>
+          
+          <h3>Formación</h3>
+          <p>Licenciado en Ciencias de la Computación con especialización en arquitectura de software. Cuenta con múltiples certificaciones en tecnologías cloud y desarrollo backend.</p>
+        `
+      }
+    };
+
+    const projectsData = {
+      project1: {
+        title: "Sistema de IA para Eficiencia Energética",
+        subtitle: "Tecnología al servicio de la sostenibilidad",
+        content: `
+          <p>Este proyecto innovador utiliza inteligencia artificial para optimizar el consumo energético en edificios residenciales y comerciales, logrando reducciones de hasta un 30% en la factura eléctrica sin comprometer el confort.</p>
+          
+          <h3>Detalles Técnicos</h3>
+          <ul>
+            <li><strong>Algoritmos de aprendizaje:</strong> Implementación de redes neuronales y algoritmos de refuerzo para predicción de consumo y optimización.</li>
+            <li><strong>Hardware personalizado:</strong> Sensores inteligentes diseñados por Tadeo para monitorear variables ambientales y de consumo.</li>
+            <li><strong>Interfaz de usuario:</strong> Dashboard interactivo desarrollado por Eugenio que permite visualizar el consumo y recibir recomendaciones.</li>
+            <li><strong>Backend robusto:</strong> Sistema escalable desarrollado por Nazareno para procesar grandes volúmenes de datos en tiempo real.</li>
+          </ul>
+          
+          <h3>Resultados e Impacto</h3>
+          <p>El sistema ha sido implementado en 15 edificios piloto con resultados excepcionales:</p>
+          <ul>
+            <li>Reducción media del 27% en consumo energético</li>
+            <li>ROI en menos de 18 meses para los usuarios</li>
+            <li>Premio a la Innovación Sostenible 2024</li>
+          </ul>
+          
+          <h3>Próximos Pasos</h3>
+          <p>Estamos trabajando en la versión 2.0 que incorporará integración con sistemas domóticos existentes y capacidades predictivas mejoradas basadas en patrones de uso y factores climáticos.</p>
+        `
+      },
+      project2: {
+        title: "Plataforma Educativa Digital",
+        subtitle: "Transformando la experiencia de aprendizaje",
+        content: `
+          <p>Esta plataforma web innovadora conecta estudiantes y profesores, ofreciendo contenido educativo personalizado que se adapta al ritmo y estilo de aprendizaje de cada usuario. Integra herramientas de evaluación, seguimiento de progreso y recursos multimedia interactivos.</p>
+          
+          <h3>Características Principales</h3>
+          <ul>
+            <li><strong>Personalización avanzada:</strong> Algoritmos diseñados por Tadeo que adaptan el contenido según el progreso y preferencias del estudiante.</li>
+            <li><strong>Interfaz intuitiva:</strong> Diseño UX/UI desarrollado por Eugenio que prioriza la facilidad de uso y la accesibilidad.</li>
+            <li><strong>Sistema escalable:</strong> Arquitectura backend robusta implementada por Nazareno para soportar miles de usuarios simultáneos.</li>
+            <li><strong>Analíticas educativas:</strong> Dashboard para docentes con estadísticas detalladas sobre el progreso de los estudiantes.</li>
+          </ul>
+          
+          <h3>Impacto Educativo</h3>
+          <p>La plataforma está siendo utilizada en un programa piloto con 5 instituciones educativas:</p>
+          <ul>
+            <li>Mejora del 35% en la retención de conocimientos</li>
+            <li>Incremento del 40% en la participación estudiantil</li>
+            <li>Reducción del 25% en el tiempo necesario para dominar nuevos conceptos</li>
+          </ul>
+          
+          <h3>Estado Actual</h3>
+          <p>El proyecto se encuentra en fase beta, con lanzamiento completo previsto para el próximo trimestre. Actualmente estamos implementando funcionalidades de colaboración en tiempo real y un módulo de inteligencia artificial para tutoría virtual.</p>
+        `
+      },
+      project3: {
+        title: "Algoritmo de Predicción Médica",
+        subtitle: "Tecnología al servicio de la salud",
+        content: `
+          <p>Este sistema utiliza técnicas avanzadas de machine learning para analizar datos médicos y ayudar en la detección temprana de condiciones cardiovasculares, permitiendo intervenciones preventivas que pueden salvar vidas.</p>
+          
+          <h3>Tecnologías Implementadas</h3>
+          <ul>
+            <li><strong>Modelos de Machine Learning:</strong> Combinación de redes neuronales y modelos estadísticos para análisis de patrones complejos.</li>
+            <li><strong>Procesamiento de datos:</strong> Pipeline de procesamiento desarrollado por Nazareno para manejar datos médicos heterogéneos.</li>
+            <li><strong>Validación médica:</strong> Colaboración con cardiólogos para validar y refinar los algoritmos predictivos.</li>
+            <li><strong>Interfaz para profesionales:</strong> Dashboard médico diseñado por Eugenio siguiendo estrictos principios de usabilidad clínica.</li>
+          </ul>
+          
+          <h3>Resultados Preliminares</h3>
+          <p>Las pruebas iniciales con datos históricos anonimizados muestran resultados prometedores:</p>
+          <ul>
+            <li>Precisión del 92% en la identificación de factores de riesgo</li>
+            <li>Sensibilidad del 89% para detectar condiciones en etapas tempranas</li>
+            <li>Valoración positiva del 95% entre los profesionales médicos que han evaluado el sistema</li>
+          </ul>
+          
+          <h3>Desarrollo Actual</h3>
+          <p>El proyecto se encuentra en fase de desarrollo avanzado. Estamos finalizando los protocolos de integración con sistemas hospitalarios existentes y optimizando el rendimiento para procesar grandes volúmenes de datos en tiempo real.</p>
+        `
+      }
+    };
+
+    // Función para abrir el modal con información
+    function openModal(id, type) {
+      const modal = document.getElementById('infoModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubtitle = document.getElementById('modalSubtitle');
+      const modalBody = document.getElementById('modalBody');
+      
+      let data;
+      
+      if (type === 'profile') {
+        data = profilesData[id];
+      } else if (type === 'project') {
+        data = projectsData[id];
+      }
+      
+      if (data) {
+        modalTitle.textContent = data.title;
+        modalSubtitle.textContent = data.subtitle;
+        modalBody.innerHTML = data.content;
+        
+        modal.classList.add('active');
+      }
+    }
+
+    // Función para cerrar el modal
+    function closeModal() {
+      const modal = document.getElementById('infoModal');
+      modal.classList.remove('active');
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Perfiles
+      document.querySelectorAll('.profile').forEach(profile => {
+        profile.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          openModal(id, 'profile');
+        });
+      });
+      
+      // Proyectos
+      document.querySelectorAll('.project-card').forEach(project => {
+        project.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          openModal(id, 'project');
+        });
+      });
+      
+      // Links de "Ver Más" en proyectos
+      document.querySelectorAll('.project-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const id = this.closest('.project-card').getAttribute('data-id');
+          openModal(id, 'project');
+        });
+      });
+      
+      // Cerrar modal
+      document.querySelector('.close-modal').addEventListener('click', closeModal);
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      document.getElementById('infoModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+      
+      // Cerrar modal con tecla Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
